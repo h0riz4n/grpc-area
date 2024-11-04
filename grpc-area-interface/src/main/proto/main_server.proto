@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+package ru.acgnn.server.area;
+
+option java_multiple_files = true;
+option java_package = "ru.acgnn.grpc.server";
+option java_outer_classname = "AreaServerGrpcProto";
+
+service AreaService {
+    rpc GetAreas (google.protobuf.Empty) returns (AreaList) {};
+    rpc GetAreaById (AreaId) returns (Area) {};
+}
+
+message AreaId {
+    int32 id = 1;
+}
+
+message AreaList {
+    repeated Area areas = 1;
+}
+
+message Area {
+    int32 id = 1;
+    string title = 2;
+    google.protobuf.Timestamp creationDateTime = 3;
+}

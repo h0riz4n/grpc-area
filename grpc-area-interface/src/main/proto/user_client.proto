@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package ru.acgnn.grpc_server.grpc.server;
+
+option java_multiple_files = true;
+option java_package = "ru.acgnn.grpc.client";
+option java_outer_classname = "UserClientProto";
+
+service UserService {
+    rpc SayHello (Request) returns (HelloReply) {}
+}
+
+message Request {
+    string name = 1;
+}
+
+message HelloReply {
+    string message = 1;
+}
