@@ -33,7 +33,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public CorsFilter corsFilter() {
+    CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
         config.addAllowedOrigin("*");
         config.addAllowedMethod("*");
@@ -52,8 +52,6 @@ public class SecurityConfig {
             .cors(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(authz -> {
                 authz
-                    .requestMatchers("/api/form_xls")
-                    .authenticated()
                     .anyRequest()
                     .permitAll();
             })
