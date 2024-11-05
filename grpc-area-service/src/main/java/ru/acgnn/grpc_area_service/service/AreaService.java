@@ -1,39 +1,27 @@
 package ru.acgnn.grpc_area_service.service;
 
-import ru.acgnn.grpc.server.AreaList;
+import java.util.List;
 
-import com.google.protobuf.Empty;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 
-import io.grpc.Status;
-import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
-import net.devh.boot.grpc.server.service.GrpcService;
-import ru.acgnn.grpc.server.Area;
-import ru.acgnn.grpc.server.AreaId;
-import ru.acgnn.grpc.server.AreaServiceGrpc.AreaServiceImplBase;
-import ru.acgnn.grpc_area_service.exception.GrpcServiceException;
-import ru.acgnn.grpc_area_service.mapper.AreaMapper;
+import ru.acgnn.grpc_area_service.exception.ApiServiceException;
 import ru.acgnn.grpc_area_service.model.entity.AreaEntity;
 import ru.acgnn.grpc_area_service.repository.AreaRepository;
 
-@GrpcService
+@Service
 @RequiredArgsConstructor
-public class AreaService extends AreaServiceImplBase {
+public class AreaService {
 
     private final AreaRepository areaRepo;
-    private final AreaMapper areaMapper;
 
-    @Override
-    public void getAreas(Empty request, StreamObserver<AreaList> responseObserver) {
-        responseObserver.onNext(AreaList.newBuilder().addAllAreas(areaMapper.toGrpcAreas(areaRepo.findAll())).build());
-        responseObserver.onCompleted();
-    } 
-    
-    @Override
-    public void getAreaById(AreaId request, StreamObserver<Area> responseObserver) {
-        AreaEntity area = areaRepo.findById(request.getId())
-            .orElseThrow(() -> new GrpcServiceException("Площадка не найдена", Status.NOT_FOUND));
-        responseObserver.onNext(areaMapper.toGrpcArea(area));
-        responseObserver.onCompleted();
+    public AreaEntity getById(Integer id) {
+        return areaRepo.findById(id)
+            .orElseThrow(() -> new ApiServiceException("Площадка не найдена", HttpStatus.NOT_FOUND));
+    }
+
+    public List<AreaEntity> getAll() {
+        return areaRepo.findAll();
     }
 }

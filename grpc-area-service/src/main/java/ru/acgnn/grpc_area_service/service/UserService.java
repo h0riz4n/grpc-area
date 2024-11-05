@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.client.inject.GrpcClient;
-import ru.acgnn.grpc.client.UserServiceGrpc.UserServiceBlockingStub;
 import ru.acgnn.grpc.client.Request;
 import ru.acgnn.grpc.client.UserServiceGrpc.UserServiceBlockingStub;
 
