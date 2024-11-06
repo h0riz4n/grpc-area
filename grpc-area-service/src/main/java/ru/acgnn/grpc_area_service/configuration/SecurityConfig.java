@@ -73,9 +73,7 @@ public class SecurityConfig {
 
     @Bean
     AuthenticationManager authManager() {
-        return new ProviderManager(
-            resourceServerProperty.getJwt().stream().map(this::jwtAuthProvider).collect(Collectors.toList())
-        );
+        return new ProviderManager(resourceServerProperty.getJwt().stream().map(this::jwtAuthProvider).collect(Collectors.toList()));
     }
 
     @Bean
