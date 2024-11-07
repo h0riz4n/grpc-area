@@ -1,6 +1,5 @@
 package ru.acgnn.grpc_area_service.grpc;
 
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.google.protobuf.Empty;
@@ -30,6 +29,7 @@ public class AreaGrpc extends AreaServiceImplBase {
     }
 
     @Override
+    @PreAuthorize("hasRole('admin')")
     public void getAreaById(AreaId request, StreamObserver<Area> responseObserver) {
         responseObserver.onNext(areaMapper.toGrpcArea(areaService.getById(request.getId())));
         responseObserver.onCompleted();

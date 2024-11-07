@@ -1,6 +1,7 @@
 package ru.acgnn.grpc_area_service.handler;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
 
 import io.grpc.Status;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,12 @@ public class GprcHandler {
     public Status handleInvalidArgument(ApiServiceException e) {
         log.debug("ApiServiceException: {}", e.getMessage());
         return getStatus(e.getStatus()).withDescription(e.getMessage());
+    }
+
+    @GrpcExceptionHandler(InvalidBearerTokenException.class)
+    public Status handleInvalidBearerTokenException(InvalidBearerTokenException e) {
+        log.debug("{}", e.getMessage());
+        return Status.UNAUTHENTICATED.withDescription(e.getMessage());
     }
 
     private Status getStatus(HttpStatus status) {
