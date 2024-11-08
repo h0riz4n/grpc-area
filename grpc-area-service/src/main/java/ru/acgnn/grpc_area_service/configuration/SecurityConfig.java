@@ -55,7 +55,7 @@ public class SecurityConfig {
         return http
             .csrf(AbstractHttpConfigurer::disable)
             .cors(AbstractHttpConfigurer::disable)
-            .authorizeHttpRequests(authz ->authz.anyRequest().permitAll())
+            .authorizeHttpRequests(authz -> authz.anyRequest().permitAll())
             .sessionManagement(sessionManagment -> sessionManagment.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .oauth2ResourceServer(oauth2 -> oauth2.authenticationManagerResolver(jwtIssuerAuthenticationManagerResolver()))
             .build();

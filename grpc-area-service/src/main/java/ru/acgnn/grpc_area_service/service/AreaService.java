@@ -1,11 +1,8 @@
 package ru.acgnn.grpc_area_service.service;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -22,9 +19,6 @@ public class AreaService {
     private final AreaRepository areaRepo;
 
     public AreaEntity getById(Integer id) {
-        JwtAuthenticationToken token = (JwtAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-        UUID userId = UUID.fromString(token.getToken().getSubject());
-        log.debug("{}", userId);
         return areaRepo.findById(id)
             .orElseThrow(() -> new ApiServiceException("Площадка не найдена", HttpStatus.NOT_FOUND));
     }

@@ -31,11 +31,7 @@ public class SecurityGrpcInterceptor implements ServerInterceptor {
         ServerCallHandler<ReqT, RespT> next
     ) {
         Authentication auth = authReader.readAuthentication(call, headers);
-        if (auth != null) {
-            SecurityContextHolder.getContext().setAuthentication(authManager.authenticate(auth));
-        } else {
-            SecurityContextHolder.getContext().setAuthentication(auth);
-        }
+        SecurityContextHolder.getContext().setAuthentication(auth != null ? authManager.authenticate(auth) : auth);
         return next.startCall(call, headers);
     }
 }
